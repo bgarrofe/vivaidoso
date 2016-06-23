@@ -1,0 +1,20 @@
+#!/bin/bash
+
+$ERRORSTRING="Error. Please make sure you've indicated correct parameters"
+if [ $# -eq 0 ]
+    then
+        echo $ERRORSTRING;
+elif [ $1 == "live" ]
+    then
+        if [[ -z $2 ]]
+            then
+                echo "Running dry-run"
+                rsync --dry-run -azP -e "ssh -p22" * garrofe@garrofe.org:/var/www/vivaidoso.com.br
+        elif [ $2 == "go" ]
+            then
+                echo "Running actual deploy"
+                rsync -azP -e "ssh -p22" * garrofe@garrofe.org:/var/www/vivaidoso.com.br
+        else
+            echo $ERRORSTRING;
+        fi
+fi
